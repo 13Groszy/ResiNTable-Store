@@ -5,16 +5,16 @@ import Currency from "./ui/currency";
 import Button from  "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import useCart from "@/hooks/use-cart";
-import { MouseEventHandler } from "react";
 
 interface InfoProps{
     data: Product;
 }
 
 const Info: React.FC<InfoProps> = ({data}) => {
+
     const cart = useCart();
-    const onAddToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
-        e.stopPropagation();
+
+    const onAddToCart = () => {
         cart.addItem(data);
     }
     return ( 

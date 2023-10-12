@@ -5,6 +5,9 @@ import Container from "@/components/ui/container";
 import Gallery from "@/components/gallery";
 import Info from "@/components/info";
 
+
+export const revalidate = 0;
+
 interface ProductPageProps {
     params: {
         productId: string;
@@ -14,10 +17,13 @@ interface ProductPageProps {
 const ProductPage: React.FC<ProductPageProps> = async ({params}) => {
 
         const product = await getProduct(params.productId);
+        if (!product) {
+            return null;
+          }
         const suggestedProducts = await getProducts({
             categoryId: product?.category?.id
-        })
-    return ( 
+        });
+    return (
         <div className="flex-1 bg-white">
             <Container>
                 <div className="px-4 py-10 sm:px-6 lg:px-8">
@@ -30,7 +36,6 @@ const ProductPage: React.FC<ProductPageProps> = async ({params}) => {
                     <hr className="my-10" />
                     <ProductList title="Related Items" items={suggestedProducts} />
                 </div>
-
             </Container>
         </div>
      );
